@@ -1,0 +1,274 @@
+/* ── Gallery ── */
+
+/* Single image fallback */
+.gallery-single {
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.gallery-single img {
+  width: 100%;
+  display: block;
+}
+
+/* Legacy dynamic grid */
+.gallery-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: flex-end;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.gallery-grid__item {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  cursor: pointer;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+.gallery-grid__item:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.4);
+}
+.gallery-grid__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.gallery-grid__item.is-landscape {
+  height: 300px;
+  flex: 1 1 auto;
+  min-width: 280px;
+  max-width: 100%;
+}
+.gallery-grid__item.is-portrait {
+  height: 360px;
+  width: 170px;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.3), inset 0 0 0 2px rgba(255,255,255,.06);
+}
+
+/* ══════════ New Media Showcase — 2×2 Grid ══════════ */
+/*
+    ┌──────────┬────────────────────┐
+    │  Cover   │  Web Preview #1    │  ← same height
+    │  Phone   │                    │
+    ├──────────┼────────────────────┤
+    │  Preview │  Web Preview #2    │  ← same height
+    │  Phone   │                    │
+    └──────────┴────────────────────┘
+*/
+.media-showcase {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1.25rem;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* Wrappers transparent — children flow into grid */
+.media-showcase__phones,
+.media-showcase__webs {
+  display: contents;
+}
+
+/* Phone device frame */
+.media-showcase__item--phone {
+  grid-column: 1;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #000;
+  border: 2px solid var(--border);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.04),
+    0 8px 32px rgba(0,0,0,.4);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+}
+.media-showcase__item--phone::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(255,255,255,.08);
+  z-index: 2;
+}
+.media-showcase__item--phone:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 1px rgba(67,97,238,.2),
+    0 16px 48px rgba(0,0,0,.5);
+}
+.media-showcase__item--phone img,
+.media-showcase__item--phone video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Web browser frame */
+.media-showcase__item--web {
+  grid-column: 2;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0,0,0,.3);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+}
+.media-showcase__item--web::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: rgba(255,255,255,.03);
+  border-bottom: 1px solid var(--border);
+  z-index: 2;
+}
+.media-showcase__item--web::after {
+  content: '● ● ●';
+  position: absolute;
+  top: 6px;
+  left: 12px;
+  font-size: 7px;
+  letter-spacing: 4px;
+  color: rgba(255,255,255,.15);
+  z-index: 3;
+}
+.media-showcase__item--web:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.45);
+}
+.media-showcase__item--web img,
+.media-showcase__item--web video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  padding-top: 28px;
+}
+
+/* ── Lightbox overlay ── */
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  cursor: zoom-out;
+}
+.gallery-lightbox.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.gallery-lightbox img,
+.gallery-lightbox video {
+  max-width: 92vw;
+  max-height: 90vh;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 80px rgba(0,0,0,.6);
+  object-fit: contain;
+}
+.gallery-lightbox .lb-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(0,0,0,.5);
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+.gallery-lightbox .lb-close:hover {
+  background: rgba(255,255,255,.15);
+}
+.gallery-lightbox .lb-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(0,0,0,.5);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+.gallery-lightbox .lb-nav:hover {
+  background: rgba(255,255,255,.15);
+}
+.gallery-lightbox .lb-prev { left: 1.5rem; }
+.gallery-lightbox .lb-next { right: 1.5rem; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .media-showcase {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .media-showcase__item--phone {
+    grid-column: 1;
+    width: 220px;
+    aspect-ratio: 9/16;
+    justify-self: center;
+  }
+  .media-showcase__item--web {
+    grid-column: 1;
+    aspect-ratio: 16/9;
+  }
+}
+@media (max-width: 480px) {
+  .media-showcase__item--phone {
+    width: 180px;
+  }
+  .gallery-grid {
+    gap: .75rem;
+  }
+  .gallery-grid__item.is-landscape {
+    height: 160px;
+    min-width: 150px;
+  }
+  .gallery-grid__item.is-portrait {
+    height: 220px;
+    width: 105px;
+  }
+}

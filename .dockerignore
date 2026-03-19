@@ -1,0 +1,10 @@
+node_modules
+.env
+.git
+.gitignore
+.claude
+.dockerignore
+Dockerfile
+fly.toml
+*.md
+.vscode

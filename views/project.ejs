@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <%- include('partials/head', { pageTitle: project.title, pageDesc: project.shortDesc }) %>
+  <link rel="stylesheet" href="/js/gallery.css" />
+</head>
+<body>
+
+<%- include('partials/navbar') %>
+
+<section class="project-hero">
+  <div class="container">
+    <a href="/#portfolio" class="back-link">
+      <i class="fa-solid fa-arrow-left"></i> Torna al portfolio
+    </a>
+    <div class="project-header">
+      <div>
+        <div class="sector"><%= project.sector %></div>
+        <h1 class="section-title"><%= project.title %></h1>
+        <div class="portfolio-tags" style="margin-top:1rem">
+          <% project.tags.forEach(tag => { %>
+            <span class="ptag"><%= tag %></span>
+          <% }) %>
+        </div>
+      </div>
+      <div class="project-meta">
+        <div class="meta-item">
+          <span class="meta-label">Tipo</span>
+          <span class="meta-value"><%= project.productType %></span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Tempo stimato</span>
+          <span class="meta-value"><%= project.estimatedTime %></span>
+        </div>
+        <% if (project.url) { %>
+        <a href="<%= project.url %>" class="btn btn-primary" target="_blank" rel="noopener">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Visita il sito
+        </a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%
+  const m = project.media || {};
+  const hasMedia = m.coverPhone || m.previewPhone || m.previewWeb1 || m.previewWeb2;
+  // Legacy fallback
+  const hasLegacyImages = !hasMedia && project.images && project.images.length > 0;
+
+  function isVideoFile(f) { return f && /\.(mp4|webm)$/i.test(f); }
+%>
+
+<% if (hasMedia) { %>
+<section class="project-gallery">
+  <div class="container">
+    <div class="media-showcase">
+      <%/* Row 1: coverPhone (col1) + previewWeb1 (col2) */ %>
+      <% if (m.coverPhone) { %>
+      <div class="media-showcase__item--phone" data-index="0">
+        <img src="<%= mediaUrl(m.coverPhone) %>" alt="<%= project.title %> — copertina" loading="lazy" />
+      </div>
+      <% } %>
+      <% if (m.previewWeb1) { %>
+      <div class="media-showcase__item--web" data-index="2">
+        <% if (isVideoFile(m.previewWeb1)) { %>
+          <video src="<%= mediaUrl(m.previewWeb1) %>" muted loop playsinline autoplay></video>
+        <% } else { %>
+          <img src="<%= mediaUrl(m.previewWeb1) %>" alt="<%= project.title %> — preview web 1" loading="lazy" />
+        <% } %>
+      </div>
+      <% } %>
+
+      <%/* Row 2: previewPhone (col1) + previewWeb2 (col2) */ %>
+      <% if (m.previewPhone) { %>
+      <div class="media-showcase__item--phone" data-index="1">
+        <% if (isVideoFile(m.previewPhone)) { %>
+          <video src="<%= mediaUrl(m.previewPhone) %>" muted loop playsinline autoplay></video>
+        <% } else { %>
+          <img src="<%= mediaUrl(m.previewPhone) %>" alt="<%= project.title %> — preview mobile" loading="lazy" />
+        <% } %>
+      </div>
+      <% } %>
+      <% if (m.previewWeb2) { %>
+      <div class="media-showcase__item--web" data-index="3">
+        <% if (isVideoFile(m.previewWeb2)) { %>
+          <video src="<%= mediaUrl(m.previewWeb2) %>" muted loop playsinline autoplay></video>
+        <% } else { %>
+          <img src="<%= mediaUrl(m.previewWeb2) %>" alt="<%= project.title %> — preview web 2" loading="lazy" />
+        <% } %>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+<% } else if (hasLegacyImages) { %>
+<section class="project-gallery">
+  <div class="container">
+    <div class="gallery-grid" id="gallery-grid">
+      <% project.images.forEach((img, i) => { %>
+        <div class="gallery-grid__item" data-index="<%= i %>">
+          <img src="<%= mediaUrl(img) %>" alt="<%= project.title %> — screenshot <%= i + 1 %>" loading="lazy" />
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } else if (project.thumbnail) { %>
+<section class="project-gallery">
+  <div class="container">
+    <div class="gallery-single">
+      <% var tSrc = mediaUrl(project.thumbnail); %>
+      <img src="<%= tSrc %>" alt="<%= project.title %>" />
+    </div>
+  </div>
+</section>
+<% } %>
+
+<section class="project-body">
+  <div class="container">
+    <div class="project-description">
+      <h2>Il progetto</h2>
+      <p><%= project.longDesc %></p>
+    </div>
+  </div>
+</section>
+
+<% if (otherProjects.length > 0) { %>
+<section class="other-projects">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Altri lavori</h2>
+    </div>
+    <div class="portfolio-list">
+      <% otherProjects.forEach(p => { %>
+        <%- include('partials/project-card', { project: p }) %>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<%- include('partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script src="/js/gallery.js"></script>
+</body>
+</html>

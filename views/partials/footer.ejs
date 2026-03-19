@@ -1,0 +1,34 @@
+<footer>
+  <div class="container footer-content">
+    <div class="footer-top">
+      <div class="footer-logo">Site<span>lya</span></div>
+      <div class="footer-links">
+        <a href="/#come-lavoriamo">Come lavoriamo</a>
+        <a href="/#portfolio">Portfolio</a>
+        <a href="/#prezzi">Prezzi</a>
+        <a href="/privacy">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>Rossi Mattia &mdash; P.IVA 04239481205</p>
+      <p>Via Del Pratello 101, 40122 Bologna (BO)</p>
+      <p>PEC: mattia.rossi@pec.fiscozen.it</p>
+    </div>
+    <p class="footer-copy">&copy; <%= new Date().getFullYear() %> Sitelya &mdash; Tutti i diritti riservati</p>
+  </div>
+</footer>
+
+<!-- Fixed bottom bar -->
+<div class="bottom-bar">
+  <div class="bottom-bar__inner">
+    <span class="bottom-bar__text">Hai un progetto in mente?</span>
+    <a href="/#contatti" class="bottom-bar__btn">
+      Richiedi un preventivo <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  </div>
+  <% if (whatsappNumber) { %>
+  <a href="https://wa.me/<%= whatsappNumber %>" class="bottom-bar__wa" target="_blank" rel="noopener" title="WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+  <% } %>
+</div>

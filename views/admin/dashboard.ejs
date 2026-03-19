@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <%- include('../partials/head', { pageTitle: 'Admin Dashboard' }) %>
+  <link rel="stylesheet" href="/admin.css" />
+</head>
+<body class="admin-body">
+  <div class="admin-wrap">
+    <header class="admin-header">
+      <a href="/" class="nav-logo">Site<span>lya</span></a>
+      <div style="display:flex;align-items:center;gap:1rem">
+        <a href="/admin/projects/new" class="btn btn-primary btn-sm">
+          <i class="fa-solid fa-plus"></i> Nuovo progetto
+        </a>
+        <a href="/admin/logout" class="btn btn-outline btn-sm">
+          <i class="fa-solid fa-right-from-bracket"></i> Esci
+        </a>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <h1 style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:2rem">Progetti</h1>
+
+      <% if (typeof message !== 'undefined' && message) { %>
+        <div class="alert alert-success"><%= message %></div>
+      <% } %>
+
+      <!-- Impostazioni -->
+      <div class="settings-section" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:2rem">
+        <h2 style="font-family:'Syne',sans-serif;font-weight:600;font-size:1.1rem;margin-bottom:1rem">
+          <i class="fa-solid fa-gear"></i> Impostazioni
+        </h2>
+        <form method="POST" action="/admin/settings" style="display:flex;align-items:flex-end;gap:1rem;flex-wrap:wrap">
+          <div class="form-group" style="margin:0;flex:1;min-width:200px">
+            <label for="whatsappNumber" style="font-size:.82rem;color:var(--muted);margin-bottom:.3rem;display:block">Numero WhatsApp (con prefisso, es. 393331234567)</label>
+            <input type="text" id="whatsappNumber" name="whatsappNumber" value="<%= whatsappNumber %>" placeholder="393331234567" style="width:100%" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">
+            <i class="fa-solid fa-save"></i> Salva
+          </button>
+        </form>
+      </div>
+
+      <div class="projects-table">
+        <% if (projects.length === 0) { %>
+          <p style="color:var(--muted); text-align:center; padding:3rem">Nessun progetto. <a href="/admin/projects/new" style="color:var(--accent)">Crea il primo.</a></p>
+        <% } else { %>
+          <table>
+            <thead>
+              <tr>
+                <th>Immagine</th>
+                <th>Titolo</th>
+                <th>Settore</th>
+                <th>Tipo</th>
+                <th>Azioni</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% projects.forEach(p => { %>
+                <tr>
+                  <td>
+                    <div class="table-thumb">
+                      <% if (p.media && p.media.coverPhone) { %>
+                        <img src="<%= mediaUrl(p.media.coverPhone) %>" alt="<%= p.title %>" />
+                      <% } else if (p.thumbnail) { %>
+                        <img src="<%= mediaUrl(p.thumbnail) %>" alt="<%= p.title %>" />
+                      <% } else { %>
+                        <div class="no-thumb"><i class="fa-solid fa-image"></i></div>
+                      <% } %>
+                    </div>
+                  </td>
+                  <td><strong><%= p.title %></strong></td>
+                  <td><%= p.sector %></td>
+                  <td><%= p.productType %></td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/lavori/<%= p.slug %>" class="btn-icon" title="Vedi" target="_blank"><i class="fa-solid fa-eye"></i></a>
+                      <a href="/admin/projects/<%= p.id %>/edit" class="btn-icon" title="Modifica"><i class="fa-solid fa-pen"></i></a>
+                      <form method="POST" action="/admin/projects/<%= p.id %>/delete" onsubmit="return confirm('Eliminare questo progetto?')" style="display:inline">
+                        <button type="submit" class="btn-icon btn-danger" title="Elimina"><i class="fa-solid fa-trash"></i></button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } %>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

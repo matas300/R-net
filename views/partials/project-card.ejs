@@ -1,0 +1,27 @@
+<a href="/lavori/<%= project.slug %>" class="portfolio-card-h reveal" data-sector="<%= project.sector %>">
+  <div class="portfolio-card-h__image">
+    <%
+      var thumb = '';
+      if (project.media && project.media.coverPhone) {
+        thumb = mediaUrl(project.media.coverPhone);
+      } else if (project.thumbnail) {
+        thumb = mediaUrl(project.thumbnail);
+      } else if (project.images && project.images[0]) {
+        thumb = mediaUrl(project.images[0]);
+      }
+    %>
+    <% if (thumb) { %>
+      <img src="<%= thumb %>" alt="<%= project.title %>" loading="lazy" />
+    <% } %>
+  </div>
+  <div class="portfolio-card-h__info">
+    <div class="sector"><%= project.sector %></div>
+    <h3><%= project.title %></h3>
+    <p><%= project.shortDesc %></p>
+    <div class="portfolio-tags">
+      <% project.tags.forEach(tag => { %>
+        <span class="ptag"><%= tag %></span>
+      <% }) %>
+    </div>
+  </div>
+</a>

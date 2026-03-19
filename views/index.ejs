@@ -1,54 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sitelya — Siti web veloci, a prezzi giusti</title>
-  <meta name="description" content="Sitelya crea siti web professionali in tempi rapidi e a prezzi accessibili. Vetrine, portfolio, e-commerce: dal preventivo alla consegna in pochi giorni." />
-  <meta name="robots" content="index, follow" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Sitelya — Siti web veloci, a prezzi giusti" />
-  <meta property="og:description" content="Siti web professionali, consegnati in tempi rapidi. Scopri il portfolio e richiedi un preventivo gratuito." />
-  <meta property="og:type" content="website" />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
-
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <link rel="stylesheet" href="style.css" />
+  <%- include('partials/head') %>
 </head>
 <body>
 
-<!-- ══════════════════════════ NAVBAR ══════════════════════════ -->
-<nav id="navbar">
-  <div class="container nav-inner">
-    <a href="#" class="nav-logo">Site<span>lya</span></a>
-    <ul class="nav-links">
-      <li><a href="#come-lavoriamo">Come lavoriamo</a></li>
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#prezzi">Prezzi</a></li>
-      <li><a href="#contatti">Contatti</a></li>
-    </ul>
-    <a href="#contatti" class="btn btn-primary nav-cta">Preventivo gratuito</a>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<!-- Mobile menu -->
-<div id="mobile-menu">
-  <a href="#come-lavoriamo" class="mobile-link">Come lavoriamo</a>
-  <a href="#portfolio" class="mobile-link">Portfolio</a>
-  <a href="#prezzi" class="mobile-link">Prezzi</a>
-  <a href="#contatti" class="mobile-link">Contatti</a>
-  <a href="#contatti" class="btn btn-primary" style="margin-top:1rem">Preventivo gratuito</a>
-</div>
+<%- include('partials/navbar') %>
 
 <!-- ══════════════════════════ HERO ══════════════════════════ -->
 <section id="hero">
@@ -81,7 +38,7 @@
           <div class="lbl">Mobile responsive</div>
         </div>
         <div class="hero-stat">
-          <div class="num">0<span>€</span></div>
+          <div class="num">0<span>&euro;</span></div>
           <div class="lbl">Preventivo</div>
         </div>
       </div>
@@ -130,100 +87,17 @@
       <h2 class="section-title">Lavori recenti.</h2>
       <p class="section-sub">Ogni progetto &egrave; costruito su misura, da zero, con attenzione ai dettagli e alle performance.</p>
     </div>
-    <div class="portfolio-grid">
-
-      <!-- Jolly System -->
-      <div class="portfolio-card reveal">
-        <div class="portfolio-thumb">
-          <img src="https://image.thum.io/get/width/600/crop/400/noanimate/https://jollysystem.netlify.app/" alt="Jolly System" loading="lazy">
-          <div class="overlay">
-            <a href="https://jollysystem.netlify.app/" class="overlay-link" target="_blank" rel="noopener">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> Vedi il sito
-            </a>
-          </div>
-        </div>
-        <div class="portfolio-info">
-          <div class="sector">Bellezza &amp; Benessere</div>
-          <h3>Jolly System &mdash; Parrucchieri</h3>
-          <p>Sito vetrina elegante per un salone di parrucchieri nel cuore di Bologna. SEO locale, schema markup, prenota via telefono.</p>
-        </div>
-        <div class="portfolio-tags">
-          <span class="ptag">HTML/CSS</span>
-          <span class="ptag">SEO locale</span>
-          <span class="ptag">Schema.org</span>
-          <span class="ptag">Mobile first</span>
-        </div>
-      </div>
-
-      <!-- MFDEPUR -->
-      <div class="portfolio-card reveal">
-        <div class="portfolio-thumb">
-          <img src="https://image.thum.io/get/width/600/crop/400/noanimate/https://www.mfdepur.com/" alt="MFDEPUR" loading="lazy">
-          <div class="overlay">
-            <a href="https://www.mfdepur.com/" class="overlay-link" target="_blank" rel="noopener">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> Vedi il sito
-            </a>
-          </div>
-        </div>
-        <div class="portfolio-info">
-          <div class="sector">Industria B2B</div>
-          <h3>MFDEPUR &mdash; Trattamento Acque</h3>
-          <p>Sito corporate per azienda specializzata in chimica industriale. Include catalogo prodotti, shop online e consulenza tecnica.</p>
-        </div>
-        <div class="portfolio-tags">
-          <span class="ptag">Node.js</span>
-          <span class="ptag">E-commerce</span>
-          <span class="ptag">Stripe</span>
-          <span class="ptag">B2B</span>
-        </div>
-      </div>
-
-      <!-- O Gato do Mar -->
-      <div class="portfolio-card reveal">
-        <div class="portfolio-thumb">
-          <img src="https://image.thum.io/get/width/600/crop/400/noanimate/https://ogatodomar.netlify.app/" alt="O Gato do Mar" loading="lazy">
-          <div class="overlay">
-            <a href="https://ogatodomar.netlify.app/" class="overlay-link" target="_blank" rel="noopener">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> Vedi il sito
-            </a>
-          </div>
-        </div>
-        <div class="portfolio-info">
-          <div class="sector">Hospitality &amp; Turismo</div>
-          <h3>O Gato do Mar &mdash; Guest House</h3>
-          <p>Sito multilingue per una guest house eco in Portogallo. Gallery fotografica, integrazione Airbnb/Booking, supporto EN/PT/IT.</p>
-        </div>
-        <div class="portfolio-tags">
-          <span class="ptag">Multilingue</span>
-          <span class="ptag">Gallery</span>
-          <span class="ptag">HTML/CSS/JS</span>
-          <span class="ptag">Hospitality</span>
-        </div>
-      </div>
-
-      <!-- Edil Trentini -->
-      <div class="portfolio-card reveal">
-        <div class="portfolio-thumb">
-          <img src="https://image.thum.io/get/width/600/crop/400/noanimate/https://ediltrentini.it/" alt="Edil Trentini" loading="lazy">
-          <div class="overlay">
-            <a href="https://ediltrentini.it/" class="overlay-link" target="_blank" rel="noopener">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> Vedi il sito
-            </a>
-          </div>
-        </div>
-        <div class="portfolio-info">
-          <div class="sector">Edilizia &amp; Costruzioni</div>
-          <h3>Edil Trentini &mdash; Impresa Edile</h3>
-          <p>Sito vetrina per impresa edile a Loiano (BO). SEO locale, schema markup, admin panel per gestione lavori e form contatti.</p>
-        </div>
-        <div class="portfolio-tags">
-          <span class="ptag">Node.js</span>
-          <span class="ptag">Admin Panel</span>
-          <span class="ptag">SEO locale</span>
-          <span class="ptag">Schema.org</span>
-        </div>
-      </div>
-
+    <div class="portfolio-filters">
+      <button class="portfolio-filter active" data-filter="all">Tutti</button>
+      <% const sectors = [...new Set(projects.map(p => p.sector).filter(Boolean))]; %>
+      <% sectors.forEach(s => { %>
+        <button class="portfolio-filter" data-filter="<%= s %>"><%= s %></button>
+      <% }) %>
+    </div>
+    <div class="portfolio-list">
+      <% projects.forEach(project => { %>
+        <%- include('partials/project-card', { project }) %>
+      <% }) %>
     </div>
   </div>
 </section>
@@ -243,6 +117,7 @@
         <div class="pricing-name">Starter</div>
         <div class="pricing-price">
           <div class="amount"><span class="currency">&euro;</span>299</div>
+          <span class="iva">a partire da &bull; IVA inclusa</span>
           <span class="note">una tantum &bull; consegna in ~5 giorni</span>
         </div>
         <ul class="pricing-features">
@@ -262,6 +137,7 @@
         <div class="pricing-name">Business</div>
         <div class="pricing-price">
           <div class="amount"><span class="currency">&euro;</span>549</div>
+          <span class="iva">a partire da &bull; IVA inclusa</span>
           <span class="note">una tantum &bull; consegna in ~10 giorni</span>
         </div>
         <ul class="pricing-features">
@@ -280,6 +156,7 @@
         <div class="pricing-name">E-commerce</div>
         <div class="pricing-price">
           <div class="amount"><span class="currency">&euro;</span>999</div>
+          <span class="iva">a partire da &bull; IVA inclusa</span>
           <span class="note">una tantum &bull; consegna in ~20 giorni</span>
         </div>
         <ul class="pricing-features">
@@ -313,14 +190,14 @@
             <div class="icon"><i class="fa-brands fa-whatsapp"></i></div>
             <div>
               <div style="font-size:.78rem;color:var(--muted);margin-bottom:.1rem">WhatsApp (risposta rapida)</div>
-              <a href="https://wa.me/39NUMEROQUI" target="_blank">+39 XXX XXX XXXX</a>
+              <a href="https://wa.me/<%= whatsappNumber %>" target="_blank"><%= whatsappNumber ? '+' + whatsappNumber.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})$/, '$1 $2 $3 $4') : 'Numero non configurato' %></a>
             </div>
           </div>
           <div class="contact-method">
             <div class="icon"><i class="fa-solid fa-envelope"></i></div>
             <div>
               <div style="font-size:.78rem;color:var(--muted);margin-bottom:.1rem">Email</div>
-              <a href="mailto:info@r-net.it">info@r-net.it</a>
+              <a href="mailto:info@sitelya.it">info@sitelya.it</a>
             </div>
           </div>
           <div class="contact-method">
@@ -332,7 +209,7 @@
           </div>
         </div>
       </div>
-      <form class="contact-form" id="contact-form" onsubmit="handleSubmit(event)">
+      <form class="contact-form" id="contact-form">
         <div class="form-group">
           <label for="nome">Nome e cognome</label>
           <input type="text" id="nome" name="nome" placeholder="Mario Rossi" required />
@@ -363,71 +240,8 @@
   </div>
 </section>
 
-<!-- ══════════════════════════ FOOTER ══════════════════════════ -->
-<footer>
-  <div class="container footer-inner">
-    <div class="footer-logo">Site<span>lya</span></div>
-    <p class="footer-copy">&copy; 2025 Sitelya &mdash; Tutti i diritti riservati</p>
-    <div class="footer-links">
-      <a href="#come-lavoriamo">Come lavoriamo</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#prezzi">Prezzi</a>
-    </div>
-  </div>
-</footer>
+<%- include('partials/footer') %>
 
-<script>
-  /* ── Navbar scroll ── */
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
-  });
-
-  /* ── Hamburger / mobile menu ── */
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
-    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-  });
-  document.querySelectorAll('.mobile-link, #mobile-menu .btn').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-      document.body.style.overflow = '';
-    });
-  });
-
-  /* ── Reveal on scroll ── */
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-  /* ── Form submit ── */
-  function handleSubmit(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]');
-    const nome = document.getElementById('nome').value;
-    btn.innerHTML = '<i class="fa-solid fa-check"></i> Inviato!';
-    btn.style.background = '#16a34a';
-    btn.disabled = true;
-    /* TODO: collegare a un backend o servizio email (es. Formspree, EmailJS) */
-    setTimeout(() => {
-      btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Invia richiesta';
-      btn.style.background = '';
-      btn.disabled = false;
-      e.target.reset();
-    }, 4000);
-  }
-</script>
-
+<script src="/js/main.js"></script>
 </body>
 </html>

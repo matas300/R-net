@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <%- include('../partials/head', { pageTitle: isEdit ? 'Modifica progetto' : 'Nuovo progetto' }) %>
+  <link rel="stylesheet" href="/admin.css" />
+</head>
+<body class="admin-body">
+  <div class="admin-wrap">
+    <header class="admin-header">
+      <a href="/" class="nav-logo">Site<span>lya</span></a>
+      <div style="display:flex;align-items:center;gap:1rem">
+        <a href="/admin" class="btn btn-outline btn-sm">
+          <i class="fa-solid fa-arrow-left"></i> Dashboard
+        </a>
+        <a href="/admin/logout" class="btn btn-outline btn-sm">
+          <i class="fa-solid fa-right-from-bracket"></i> Esci
+        </a>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <h1 style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:2rem">
+        <%= isEdit ? 'Modifica progetto' : 'Nuovo progetto' %>
+      </h1>
+
+      <% if (typeof errors !== 'undefined' && errors && errors.length > 0) { %>
+        <div class="alert alert-error">
+          <% errors.forEach(e => { %>
+            <div><%= e.msg %></div>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <form method="POST"
+            action="<%= isEdit ? '/admin/projects/' + project.id + '/edit' : '/admin/projects/new' %>"
+            enctype="multipart/form-data"
+            class="project-form">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="title">Titolo</label>
+            <input type="text" id="title" name="title" value="<%= isEdit ? project.title : '' %>" required />
+            <small style="color:var(--muted)">Lo slug viene generato automaticamente dal titolo</small>
+          </div>
+          <div class="form-group">
+            <label for="sector">Settore</label>
+            <input type="text" id="sector" name="sector" value="<%= isEdit ? project.sector : '' %>" placeholder="es. Bellezza & Benessere" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tags">Tags</label>
+          <div class="tags-input" id="tags-input">
+            <div class="tags-list" id="tags-list"></div>
+            <input type="text" id="tag-field" placeholder="Scrivi e premi Invio..." />
+          </div>
+          <input type="hidden" name="tags" id="tags-hidden" value="<%= isEdit ? project.tags.join(',') : '' %>" />
+        </div>
+
+        <div class="form-group">
+          <label for="shortDesc">Descrizione breve (per la card, max ~200 caratteri)</label>
+          <textarea id="shortDesc" name="shortDesc" maxlength="250" rows="2" required><%= isEdit ? project.shortDesc : '' %></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="longDesc">Descrizione lunga (per la pagina dettaglio)</label>
+          <textarea id="longDesc" name="longDesc" rows="6" required><%= isEdit ? project.longDesc : '' %></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="url">URL sito live</label>
+            <input type="url" id="url" name="url" value="<%= isEdit ? project.url : '' %>" placeholder="https://..." />
+          </div>
+          <div class="form-group">
+            <label for="productType">Tipo prodotto</label>
+            <select id="productType" name="productType">
+              <option value="Starter" <%= isEdit && project.productType === 'Starter' ? 'selected' : '' %>>Starter</option>
+              <option value="Business" <%= isEdit && project.productType === 'Business' ? 'selected' : '' %>>Business</option>
+              <option value="E-commerce" <%= isEdit && project.productType === 'E-commerce' ? 'selected' : '' %>>E-commerce</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="estimatedTime">Tempo stimato</label>
+            <input type="text" id="estimatedTime" name="estimatedTime" value="<%= isEdit ? project.estimatedTime : '' %>" placeholder="es. 5 giorni" />
+          </div>
+        </div>
+
+        <!-- ══════════ MEDIA — 4 slot fissi ══════════ -->
+        <h2 style="font-family:'Syne',sans-serif;font-weight:600;font-size:1.15rem;margin:2rem 0 1rem">
+          <i class="fa-solid fa-photo-film"></i> Media
+        </h2>
+
+        <%
+          const media = isEdit && project.media ? project.media : {};
+          const slots = [
+            { key: 'coverPhone',   label: 'Copertina smartphone',             hint: 'Immagine statica 9:16 (~375×667px)', accept: 'image/*,video/mp4,video/webm', isPhone: true },
+            { key: 'previewPhone', label: 'Preview telefono (immagine/GIF/video)', hint: 'Immagine, GIF o video breve 9:16 (~375×667px)', accept: 'image/*,video/mp4,video/webm', isPhone: true },
+            { key: 'previewWeb1',  label: 'Preview web #1 (immagine/GIF/video)',   hint: 'Immagine, GIF o video breve 16:9 (~1280×720px)', accept: 'image/*,video/mp4,video/webm', isPhone: false },
+            { key: 'previewWeb2',  label: 'Preview web #2 (immagine/GIF/video)',   hint: 'Immagine, GIF o video breve 16:9 (~1280×720px)', accept: 'image/*,video/mp4,video/webm', isPhone: false }
+          ];
+        %>
+
+        <div class="media-slots">
+          <% slots.forEach(slot => {
+            const current = media[slot.key] || '';
+            const isVideo = current && /\.(mp4|webm)$/i.test(current);
+          %>
+          <div class="media-slot <%= slot.isPhone ? 'media-slot--phone' : 'media-slot--web' %>" id="slot-<%= slot.key %>">
+            <label class="media-slot__label"><%= slot.label %></label>
+            <small class="media-slot__hint"><%= slot.hint %></small>
+
+            <div class="media-slot__preview" id="preview-<%= slot.key %>">
+              <% if (current) { %>
+                <% if (isVideo) { %>
+                  <video src="<%= mediaUrl(current) %>" muted loop playsinline autoplay></video>
+                <% } else { %>
+                  <img src="<%= mediaUrl(current) %>" alt="<%= slot.label %>" />
+                <% } %>
+              <% } else { %>
+                <div class="media-slot__empty">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  <span>Nessun file</span>
+                </div>
+              <% } %>
+            </div>
+
+            <div class="media-slot__actions">
+              <label class="btn btn-outline btn-sm media-slot__upload-btn">
+                <i class="fa-solid fa-upload"></i> <%= current ? 'Sostituisci' : 'Carica' %>
+                <input type="file" name="<%= slot.key %>" accept="<%= slot.accept %>" hidden
+                       onchange="previewMediaSlot(this, '<%= slot.key %>', <%= slot.isPhone %>)" />
+              </label>
+              <% if (current) { %>
+                <button type="button" class="btn btn-outline btn-sm media-slot__remove-btn"
+                        onclick="toggleRemoveMedia(this, '<%= slot.key %>')">
+                  <i class="fa-solid fa-trash"></i> Rimuovi
+                </button>
+                <input type="hidden" name="remove_<%= slot.key %>" id="remove-<%= slot.key %>" value="" />
+              <% } %>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="margin-top:2rem">
+          <i class="fa-solid fa-save"></i> <%= isEdit ? 'Salva modifiche' : 'Crea progetto' %>
+        </button>
+      </form>
+    </main>
+  </div>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
