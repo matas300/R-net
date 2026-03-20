@@ -8,6 +8,35 @@ router.get('/', (req, res) => {
   res.render('index', { projects });
 });
 
+// Sitemap
+router.get('/sitemap.xml', (req, res) => {
+  const baseUrl = 'https://sitelya.it';
+  const projects = dataStore.getAll();
+
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+
+  // Static pages
+  xml += `  <url><loc>${baseUrl}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>\n`;
+  xml += `  <url><loc>${baseUrl}/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>\n`;
+
+  // Project pages
+  projects.forEach(p => {
+    xml += `  <url><loc>${baseUrl}/lavori/${p.slug}</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>\n`;
+  });
+
+  xml += '</urlset>';
+
+  res.header('Content-Type', 'application/xml');
+  res.send(xml);
+});
+
+// Robots.txt
+router.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('User-agent: *\nAllow: /\nSitemap: https://sitelya.it/sitemap.xml\n');
+});
+
 // Privacy policy
 router.get('/privacy', (req, res) => {
   res.render('privacy');
