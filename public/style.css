@@ -104,10 +104,12 @@ ul { list-style: none; }
   top: 0; left: 0; right: 0;
   z-index: 999;
   padding: 1.1rem 0;
-  transition: var(--transition);
+  transition: background .25s cubic-bezier(.4,0,.2,1), border-bottom .25s cubic-bezier(.4,0,.2,1);
+  background: transparent;
+  border-bottom: 1px solid transparent;
 }
 #navbar.scrolled {
-  background: rgba(10,10,10,.9);
+  background: rgba(10,10,10,.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
@@ -144,6 +146,8 @@ ul { list-style: none; }
   gap: 5px;
   cursor: pointer;
   padding: 4px;
+  background: none;
+  border: none;
 }
 .hamburger span {
   display: block;
