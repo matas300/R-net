@@ -46,6 +46,12 @@ app.use((req, res) => {
   res.status(404).render('404');
 });
 
-app.listen(PORT, () => {
-  console.log(`Sitelya server running on http://localhost:${PORT}`);
+const dataStore = require('./utils/dataStore');
+dataStore.init().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Sitelya server running on http://localhost:${PORT}`);
+  });
+}).catch(err => {
+  console.error('Failed to init data store:', err);
+  process.exit(1);
 });

@@ -133,7 +133,7 @@ router.post('/projects/new', requireAuth, mediaFields, async (req, res) => {
     media
   };
 
-  dataStore.create(project);
+  await dataStore.create(project);
   res.redirect('/admin?msg=Progetto creato con successo');
 });
 
@@ -187,7 +187,7 @@ router.post('/projects/:id/edit', requireAuth, mediaFields, async (req, res) => 
     media
   };
 
-  dataStore.update(req.params.id, data);
+  await dataStore.update(req.params.id, data);
   res.redirect('/admin?msg=Progetto aggiornato');
 });
 
@@ -202,7 +202,7 @@ router.post('/settings', requireAuth, (req, res) => {
 });
 
 // Delete project
-router.post('/projects/:id/delete', requireAuth, (req, res) => {
+router.post('/projects/:id/delete', requireAuth, async (req, res) => {
   const project = dataStore.getById(req.params.id);
   if (project && project.media) {
     MEDIA_KEYS.forEach(key => deleteMedia(project.media[key]));
@@ -211,7 +211,7 @@ router.post('/projects/:id/delete', requireAuth, (req, res) => {
   if (project && project.images) {
     project.images.forEach(img => deleteMedia(img));
   }
-  dataStore.remove(req.params.id);
+  await dataStore.remove(req.params.id);
   res.redirect('/admin?msg=Progetto eliminato');
 });
 
