@@ -200,13 +200,15 @@
               <a href="mailto:info@sitelya.it">info@sitelya.it</a>
             </div>
           </div>
+          <% if (instagramHandle) { %>
           <div class="contact-method">
             <div class="icon"><i class="fa-brands fa-instagram"></i></div>
             <div>
               <div style="font-size:.78rem;color:var(--muted);margin-bottom:.1rem">Instagram</div>
-              <a href="https://instagram.com/" target="_blank">@rnet.web</a>
+              <a href="https://instagram.com/<%= instagramHandle.replace('@','') %>" target="_blank"><%= instagramHandle.startsWith('@') ? instagramHandle : '@' + instagramHandle %></a>
             </div>
           </div>
+          <% } %>
         </div>
       </div>
       <form class="contact-form" id="contact-form">

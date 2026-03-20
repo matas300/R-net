@@ -35,6 +35,10 @@
             <label for="whatsappNumber" style="font-size:.82rem;color:var(--muted);margin-bottom:.3rem;display:block">Numero WhatsApp (con prefisso, es. 393331234567)</label>
             <input type="text" id="whatsappNumber" name="whatsappNumber" value="<%= whatsappNumber %>" placeholder="393331234567" style="width:100%" />
           </div>
+          <div class="form-group" style="margin:0;flex:1;min-width:200px">
+            <label for="instagramHandle" style="font-size:.82rem;color:var(--muted);margin-bottom:.3rem;display:block">Account Instagram (es. @rnet.web)</label>
+            <input type="text" id="instagramHandle" name="instagramHandle" value="<%= typeof instagramHandle !== 'undefined' ? instagramHandle : '' %>" placeholder="@rnet.web" style="width:100%" />
+          </div>
           <button type="submit" class="btn btn-primary btn-sm">
             <i class="fa-solid fa-save"></i> Salva
           </button>

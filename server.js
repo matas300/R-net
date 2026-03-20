@@ -17,6 +17,7 @@ function loadSettings() {
 app.use((req, res, next) => {
   const settings = loadSettings();
   res.locals.whatsappNumber = settings.whatsappNumber || '';
+  res.locals.instagramHandle = settings.instagramHandle || '';
   // Helper to resolve media paths: full URLs pass through, bare filenames get /uploads/ prefix
   res.locals.mediaUrl = function(val) {
     if (!val) return '';

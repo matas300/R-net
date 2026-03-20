@@ -197,6 +197,7 @@ router.post('/settings', requireAuth, (req, res) => {
   let settings = {};
   try { settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')); } catch {}
   settings.whatsappNumber = (req.body.whatsappNumber || '').replace(/[^0-9]/g, '');
+  settings.instagramHandle = (req.body.instagramHandle || '').trim();
   fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
   res.redirect('/admin?msg=Impostazioni salvate');
 });
